@@ -10,8 +10,6 @@ export interface ITodo {
   completed: boolean
 }
 
-type TFilterByStatus = 'all' | 'completed' | 'active'
-
 interface TodoState {
   todos: ITodo[]
   addTodo: (
