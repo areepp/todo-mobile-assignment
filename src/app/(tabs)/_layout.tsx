@@ -1,4 +1,4 @@
-import FontAwesome from '@expo/vector-icons/Feather'
+import FeatherIcon from '@expo/vector-icons/Feather'
 import { Tabs } from 'expo-router'
 import { View } from 'react-native'
 import tw from '@/lib/tailwind'
@@ -21,7 +21,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="list" color={color} />
+            <FeatherIcon size={28} name="list" color={color} />
           ),
         }}
       />
@@ -30,7 +30,7 @@ export default function TabLayout() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="clock" color={color} />
+            <FeatherIcon size={28} name="clock" color={color} />
           ),
         }}
       />
@@ -42,7 +42,7 @@ export default function TabLayout() {
             <View
               style={tw`p-3 rounded-full bg-primary mb-6 absolute bottom-0 shadow-lg`}
             >
-              <FontAwesome size={28} name="plus" color="white" />
+              <FeatherIcon size={28} name="plus" color="white" />
             </View>
           ),
         }}
@@ -52,7 +52,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="bell" color={color} />
+            <FeatherIcon size={28} name="bell" color={color} />
           ),
         }}
       />
@@ -61,7 +61,7 @@ export default function TabLayout() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="user" color={color} />
+            <FeatherIcon size={28} name="user" color={color} />
           ),
         }}
       />
