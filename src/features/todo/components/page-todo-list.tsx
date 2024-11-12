@@ -4,7 +4,7 @@ import { ITodo, useTodoStore } from '@/features/todo/hooks/use-todo-store'
 import tw from '@/lib/tailwind'
 import { FlatList, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { format } from 'date-fns'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover'
@@ -97,6 +97,12 @@ export default function TodoList() {
 
   const { todos } = useTodoStore()
 
+  const filteredTodosByStatus = useMemo(() => {
+    if (filter === 'completed') return todos.filter((todo) => todo.completed)
+    if (filter === 'active') return todos.filter((todo) => !todo.completed)
+    return todos
+  }, [todos, filter])
+
   return (
     <SafeAreaView style={tw`px-12`}>
       <View style={tw`h-20 w-20`}></View>
@@ -118,19 +124,37 @@ export default function TodoList() {
               setFilter('all')
             }}
           >
-            <CustomText customStyle="font-medium">All</CustomText>
+            <CustomText customStyle={[filter === 'all' ? 'font-bold' : '']}>
+              All
+            </CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={tw`border-b py-2`}>
-            <CustomText customStyle="font-medium">Active</CustomText>
+          <TouchableOpacity
+            style={tw`border-b py-2`}
+            onPress={() => {
+              setFilter('active')
+            }}
+          >
+            <CustomText customStyle={[filter === 'active' ? 'font-bold' : '']}>
+              Active
+            </CustomText>
           </TouchableOpacity>
-          <TouchableOpacity style={tw`py-2`}>
-            <CustomText customStyle="font-medium">Completed</CustomText>
+          <TouchableOpacity
+            style={tw`py-2`}
+            onPress={() => {
+              setFilter('completed')
+            }}
+          >
+            <CustomText
+              customStyle={[filter === 'completed' ? 'font-bold' : '']}
+            >
+              Completed
+            </CustomText>
           </TouchableOpacity>
         </PopoverContent>
       </Popover>
       <FlatList
         style={tw`mt-3`}
-        data={todos}
+        data={filteredTodosByStatus}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => <TodoItem item={item} />}
         contentContainerStyle={{
