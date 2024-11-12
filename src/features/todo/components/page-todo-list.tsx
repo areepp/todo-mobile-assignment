@@ -84,7 +84,7 @@ const TodoItem = ({ item }: { item: ITodo }) => {
 
 type TTodoFilter = 'all' | 'completed' | 'active'
 
-export default function TodoList() {
+export default function PageTodoList() {
   const insets = useSafeAreaInsets()
   const contentInsets = {
     top: insets.top,
