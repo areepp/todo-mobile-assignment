@@ -12,7 +12,7 @@ export default function DateFilter() {
   const [showDatePicker, setShowDatePicker] = useState(false)
 
   function handleConfirmDate(date: Date) {
-    setActiveDate(date)
+    setActiveDate(date.toISOString())
     setShowDatePicker(false)
   }
 
@@ -30,7 +30,7 @@ export default function DateFilter() {
           </TouchableOpacity>
         </View>
         <DateTimePickerModal
-          date={activeDate}
+          date={new Date(activeDate)}
           isVisible={showDatePicker}
           onCancel={() => setShowDatePicker(false)}
           onConfirm={handleConfirmDate}

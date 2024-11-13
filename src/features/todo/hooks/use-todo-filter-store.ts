@@ -8,10 +8,10 @@ export type TStatusFilter = 'active' | 'completed' | 'all'
 interface PeriodFilterState {
   activeTimeFilter: TTimeFilter
   statusFilter: TStatusFilter
-  activeDate: Date
+  activeDate: string
   setActiveTimeFilter: (filter: TTimeFilter) => void
   setStatusFilter: (filter: TStatusFilter) => void
-  setActiveDate: (newDate: Date) => void
+  setActiveDate: (newDate: string) => void
 }
 
 const todoFilterStore = create(
@@ -19,14 +19,14 @@ const todoFilterStore = create(
     (set) => ({
       activeTimeFilter: 'daily',
       statusFilter: 'all',
-      activeDate: new Date(),
+      activeDate: new Date().toISOString(),
       setActiveTimeFilter: (filter: TTimeFilter) => {
         set(() => ({ activeTimeFilter: filter }))
       },
       setStatusFilter: (filter: TStatusFilter) => {
         set(() => ({ statusFilter: filter }))
       },
-      setActiveDate: (newDate: Date) => set(() => ({ activeDate: newDate })),
+      setActiveDate: (newDate: string) => set(() => ({ activeDate: newDate })),
     }),
     {
       name: 'time-filter',

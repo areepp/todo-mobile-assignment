@@ -18,9 +18,12 @@ export default function PageTodoList() {
   const filteredTodosByStatus = useMemo(() => {
     let parsedTodos = todos
 
-    if (activeTimeFilter === 'daily') {
+    if (activeTimeFilter === 'daily' && activeDate) {
       parsedTodos = todos.filter((todo) => {
-        return new Date(todo.date).toDateString() == activeDate.toDateString()
+        return (
+          new Date(todo.date).toDateString() ==
+          new Date(activeDate).toDateString()
+        )
       })
     }
 
