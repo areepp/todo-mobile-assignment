@@ -6,6 +6,7 @@ import CustomText from '@/components/custom-text'
 import { format } from 'date-fns'
 import { useState } from 'react'
 import tw from '@/lib/tailwind'
+import { Calendar } from 'react-native-calendars'
 
 export default function DateFilter() {
   const { activeTimeFilter, activeDate, setActiveDate } = useTodoFilterStore()
@@ -16,8 +17,12 @@ export default function DateFilter() {
     setShowDatePicker(false)
   }
 
+  function onMonthChange({ dateString, ...rest }: { dateString: number }) {
+    setActiveDate(new Date(dateString).toISOString())
+  }
+
   if (activeTimeFilter === 'monthly') {
-    return <View />
+    return <Calendar current={activeDate} onMonthChange={onMonthChange} />
   } else {
     return (
       <>

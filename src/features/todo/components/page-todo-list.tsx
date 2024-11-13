@@ -19,7 +19,7 @@ export default function PageTodoList() {
     let parsedTodos = todos
 
     if (activeTimeFilter === 'daily' && activeDate) {
-      parsedTodos = todos.filter((todo) => {
+      parsedTodos = parsedTodos.filter((todo) => {
         return (
           new Date(todo.date).toDateString() ==
           new Date(activeDate).toDateString()
@@ -27,10 +27,16 @@ export default function PageTodoList() {
       })
     }
 
+    if (activeTimeFilter === 'monthly' && activeDate) {
+      parsedTodos = parsedTodos.filter((todo) => {
+        return new Date(todo.date).getMonth() == new Date(activeDate).getMonth()
+      })
+    }
+
     if (statusFilter === 'completed')
-      return parsedTodos.filter((todo) => todo.completed)
+      parsedTodos = parsedTodos.filter((todo) => todo.completed)
     if (statusFilter === 'active')
-      return parsedTodos.filter((todo) => !todo.completed)
+      parsedTodos = parsedTodos.filter((todo) => !todo.completed)
     return parsedTodos
   }, [todos, statusFilter, activeDate])
 
