@@ -11,7 +11,7 @@ function ToggleItem({ timeFilter }: Readonly<{ timeFilter: TTimeFilter }>) {
     <Pressable
       onPress={() => setActiveTimeFilter(timeFilter)}
       style={tw.style(
-        'flex-1 flex items-center px-6 py-3',
+        'flex-1 flex items-center px-6 py-4',
         timeFilter === activeTimeFilter ? 'rounded-full bg-primary' : '',
       )}
     >
@@ -26,9 +26,7 @@ function ToggleItem({ timeFilter }: Readonly<{ timeFilter: TTimeFilter }>) {
 
 export default function ToggleDailyMonthly() {
   return (
-    <View
-      style={tw`w-full flex flex-row over border rounded-full border-accent`}
-    >
+    <View style={tw`w-full flex flex-row border rounded-full border-accent`}>
       <ToggleItem timeFilter="monthly" />
       <ToggleItem timeFilter="daily" />
     </View>
