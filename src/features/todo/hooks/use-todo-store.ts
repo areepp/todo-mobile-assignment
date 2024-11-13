@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { create, useStore } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import * as Notifications from 'expo-notifications'
 
 export interface ITodo {
   id: number
@@ -23,7 +24,7 @@ const todoStore = create(
   persist<TodoState>(
     (set) => ({
       todos: [],
-      addTodo: (data) => {
+      addTodo: async (data) => {
         let parsedDate = data.date
         if (data.time) {
           parsedDate.setHours(
@@ -32,7 +33,21 @@ const todoStore = create(
             data.time.getSeconds(),
             data.time.getMilliseconds(),
           )
+          const triggerDate = new Date(parsedDate.getTime() - 5 * 60 * 1000)
+
+          // Schedule the notification
+          // temporary implementation. Should be set from some kind of background task or cron job instead and check whether the task is completed or not.
+          await Notifications.scheduleNotificationAsync({
+            content: {
+              title: 'Upcoming Task',
+              body: `Your task "${data.task}" is due in 5 minutes.`,
+            },
+            trigger: {
+              date: triggerDate,
+            },
+          })
         }
+
         const newTodo = {
           id: Date.now(),
           task: data.task,
