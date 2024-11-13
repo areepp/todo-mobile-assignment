@@ -1,7 +1,7 @@
 import { useTodoStore } from '@/features/todo/hooks/use-todo-store'
 import tw from '@/lib/tailwind'
 import { FlatList, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { useMemo } from 'react'
 import ToggleDailyMonthly from './toggle-daily-monthly'
 import { useTodoFilterStore } from '../hooks/use-todo-filter-store'
@@ -15,7 +15,7 @@ export default function PageTodoList() {
 
   const { todos } = useTodoStore()
 
-  const filteredTodosByStatus = useMemo(() => {
+  const filteredTodos = useMemo(() => {
     let parsedTodos = todos
 
     if (activeTimeFilter === 'daily' && activeDate) {
@@ -41,27 +41,27 @@ export default function PageTodoList() {
   }, [todos, statusFilter, activeDate])
 
   return (
-    <SafeAreaView style={{ display: 'flex' }}>
-      <View style={tw`px-12 pt-12 bg-secondary`}>
-        <ToggleDailyMonthly />
-        <View style={tw`my-6`}>
-          <DateFilter />
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={tw`px-12 pt-12 bg-secondary`}>
+          <ToggleDailyMonthly />
+          <View style={tw`my-6`}>
+            <DateFilter />
+          </View>
         </View>
-      </View>
 
-      <View style={tw`px-12`}>
-        {activeTimeFilter === 'monthly' && (
-          <CustomText customStyle="text-2xl font-bold mt-3">
-            This month
-          </CustomText>
-        )}
-        <View style={tw`mt-3`}>
-          <StatusFilterPopover />
-        </View>
-        <View>
+        <View style={tw`px-12`}>
+          {activeTimeFilter === 'monthly' && (
+            <CustomText customStyle="text-2xl font-bold mt-3">
+              This month
+            </CustomText>
+          )}
+          <View style={tw`mt-3`}>
+            <StatusFilterPopover />
+          </View>
           <FlatList
             style={tw`mt-3`}
-            data={filteredTodosByStatus}
+            data={filteredTodos}
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => <TodoItem item={item} />}
             contentContainerStyle={{
@@ -69,7 +69,7 @@ export default function PageTodoList() {
             }}
           />
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }

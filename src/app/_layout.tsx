@@ -20,6 +20,7 @@ export default function Layout() {
       if (status !== 'granted') {
         alert('Permission for notifications was denied!')
       }
+      return
     }
 
     requestPermissions()
